@@ -24,7 +24,7 @@ sudo docker build -t app1 -f /backend_rds/Dockerfile .
 sudo docker run -d --name app1-container -p 8000:8000 app1
 
 # Navigate to the directory where the second application's Dockerfile is located
-cd /home/ec2-user/app/apps-code
+cd /home/ec2-user/app/Experior
 
 # Build the Docker image for the second application
 sudo docker build -t app2 -f /backend_redis/Dockerfile .
