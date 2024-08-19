@@ -6,23 +6,20 @@ The project is organized into the following key files:
 
 ## 1. main.tf
 Purpose: The primary Terraform configuration file that includes the main blocks for setting up the infrastructure resources like VPC, subnets, security groups, and ALB.
-## Backend Configuration: 
+## 2. Backend Configuration: 
 Specifies the remote backend for storing the Terraform state in an S3 bucket. each environment has its own backend for consistency. 
 
-## AWS Provider Configuration: 
+## 3. AWS Provider Configuration: 
 Sets up the required providers and configures the AWS provider.
 
-## 2. variables.tf
+## 4. variables.tf
 Defines all the variables used in the project. This includes AMI IDs, instance types, environment names, VPC CIDR blocks, subnet CIDR blocks, and more.
 
-## 3. vpc.tf
+## 5. vpc.tf
 Configures a VPC for each environment, subnets, and related networking components.
 
-## 4. asg_launch_template.tf
+## 6. asg_launch_template.tf
 Manages the Auto Scaling Group (ASG) and Launch Template, which are responsible for deploying and managing EC2 instances within the private subnets. 
-
-## User Data Script: 
-The Launch Template includes a user data script that automates the setup of EC2 instances, including the installation of necessary packages, Docker, and the deployment of applications using Docker.
 
 ## 5. s3_cloudfront.tf
 Manages the S3 bucket and CloudFront distribution. The S3 bucket is used for storing static content, and CloudFront provides a content delivery network (CDN) for faster content delivery.
@@ -36,7 +33,7 @@ Defines the output values that will be useful to know after Terraform completes 
 ## 8. terraform.tfvars
 Contains the environment-specific values for the variables declared in variables.tf. Separate files for development (dev.tfvars) and production (prod.tfvars) environments help in deploying resources with different configurations.
 
-## User Data Script
+## 9. User Data Script
 The user data script within the Launch Template plays a vital role in configuring the EC2 instances on startup. It automates the installation of required software, clones the application code from the repository, builds the Docker images, and runs the containers. 
 
 ## USAGE
@@ -48,12 +45,12 @@ On initial deploy of new resources you may encounter an error when creating the 
 │ 
 │   with module.static_web.aws_s3_bucket_policy.frontend_bucket_policy,
 │   on s3_cloudfront/main.tf line 30, in resource "aws_s3_bucket_policy" "frontend_bucket_policy":
-│   30: resource "aws_s3_bucket_policy" "frontend_bucket_policy" {
+│   30: resource "aws_s3_bucket_policy" "frontend_bucket_policy" 
 │
 
 No worries, just re-run the failed job to clear the error and complete the build. 
 
-To destroy infrastructure, uncomment the destroy block in the workflow file and run the pipeline. This will destroy all available resources in the given branch.. 
+Before running the pipeline comment the destroy block in the workflow file. This will build all available resources in the given branch. To destroy them once built, comment out the block. 
 
  <!-- destroy-infrastructure:
     runs-on: ubuntu-latest
