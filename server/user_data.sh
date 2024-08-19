@@ -12,10 +12,10 @@ sudo systemctl start docker
 sudo systemctl enable docker
 
 # Clone the GitHub repository
-git clone https://github.com/Blackbandit22/Experior-test.git /home/ec2-user/app
+git clone https://github.com/Blackbandit22/Experior.git /home/ec2-user/app
 
 # Navigate to the directory where the first application's Dockerfile is located
-cd /home/ec2-user/app/apps-code
+cd /home/ec2-user/app/Experior
 
 # Build the Docker image for the first application
 sudo docker build -t app1 -f /backend_rds/Dockerfile .
