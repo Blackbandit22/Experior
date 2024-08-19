@@ -11,6 +11,7 @@ resource "local_file" "config_json" {
 resource "aws_s3_bucket" "frontend_bucket" {
   bucket = var.s3_bucket_name
   force_destroy = true
+  depends_on = [ local_file.config_json ]
 }
 
 # Configure the S3 bucket as a website
@@ -56,6 +57,7 @@ resource "aws_s3_bucket_public_access_block" "experior_bucket_public_access" {
 # Upload index.html to the S3 bucket
 ##### will upload all the files present under HTML folder to the S3 bucket #####
 resource "aws_s3_object" "upload_object" {
+  depends_on = [ local_file.config_json ]
   for_each      = fileset("${path.module}/html/", "*")
   bucket        = aws_s3_bucket.frontend_bucket.id
  key           = each.value
