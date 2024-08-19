@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend Service</title>
+</head>
+<body>
+    <h1>Test Connections</h1>
+    <button id="test-rds-btn">Test RDS Connection</button>
+    <button id="test-redis-btn">Test Redis Connection</button>
+
+    <div id="results"></div>
+
+    <script>
+        let BACKEND_RDS_URL;
+        let BACKEND_REDIS_URL;
+
+        async function loadConfig() {
+            try {
+                const response = await fetch('config.json');
+                const config = await response.json();
+                BACKEND_RDS_URL = config.BACKEND_RDS_URL;
+                BACKEND_REDIS_URL = config.BACKEND_REDIS_URL;
+            } catch (error) {
+                console.error('Error loading configuration:', error);
+                document.getElementById('results').innerText = 'Error loading configuration: ' + error;
+            }
+        }
+
+        document.getElementById('test-rds-btn').addEventListener('click', function() {
+            if (!BACKEND_RDS_URL) {
+                document.getElementById('results').innerText = 'RDS URL not configured.';
+                return;
+            }
+            fetch(BACKEND_RDS_URL)
+                .then(response => response.json())
+                .then(data => document.getElementById('results').innerText = 'RDS Data: ' + JSON.stringify(data))
+                .catch(error => document.getElementById('results').innerText = 'RDS Error: ' + error);
+        });
+
+        document.getElementById('test-redis-btn').addEventListener('click', function() {
+            if (!BACKEND_REDIS_URL) {
+                document.getElementById('results').innerText = 'Redis URL not configured.';
+                return;
+            }
+            fetch(BACKEND_REDIS_URL)
+                .then(response => response.json())
+                .then(data => document.getElementById('results').innerText = 'Redis Data: ' + JSON.stringify(data))
+                .catch(error => document.getElementById('results').innerText = 'Redis Error: ' + error);
+        });
+
+        window.onload = loadConfig;
+    </script>
+</body>
+</html>
