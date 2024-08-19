@@ -24,7 +24,7 @@ resource "aws_launch_template" "sh_ec2_launch_templ" {
 resource "aws_autoscaling_group" "sh_asg" {
   # no of instances
   desired_capacity = 1
-  max_size         = 1
+  max_size         = 2
   min_size         = 1
 
   # source
