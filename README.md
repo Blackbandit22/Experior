@@ -90,5 +90,4 @@ Since this is a demo, I have skipped the steps to allow for peer review and appr
 2. The utilization of application load balancers requires two availability zones. Hence launching one ALB per zone is not feasible as stated within the diagram for the architecture. 
 
 3. To be able to store both prod and dev env in the same bucket  can be accomplished by using different paths (prefixes) within the bucket for each environment, that was not implememnted yet ( Note for further development).
-
-4. For easier and simplier deployment each env have individual VPC's. 
+ 
